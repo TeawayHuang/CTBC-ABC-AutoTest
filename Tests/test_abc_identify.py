@@ -342,6 +342,61 @@ class TestAbcIdentifyAPI:
         assert 'Misformed Request Body' in response_json['error']['message']
 
     @pytest.mark.abcididentifyapi
+    def test_abc_identify_3_005_1(self, request):
+        """ test_abc_identify_3_005_1 """
+        """ Error Handling """
+        """ Request Body format is not correct """
+        """ Expected 400 and message is 'Misformed Request Body' """
+
+        item = "test_abc_id_identify_api_3_005"
+        LogHelp.log_test_env(item, request.config.getoption('--env'))
+
+        req_headers = {
+            "Content-Type": "application/json",
+            "X-SOURCE-ID": "X-SOURCE-ID",
+            "api_txno": "YYYYMMDDHHmmssfff"
+            }
+
+        req_body = {
+            "sourceIdType":"OID"
+        }
+
+        LogHelp.log_url_header_body(item, BASEURL+':'+ABCIDIDENTIFYPORT+ABCIDIDENTIFYPATH, req_headers, req_body)
+        response = requests.post(url=BASEURL+':'+ABCIDIDENTIFYPORT+ABCIDIDENTIFYPATH, headers=req_headers, json=req_body, timeout=TIMEOUT)
+        response_json = json.loads(response.text)
+        assert response.status_code == 400
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
+
+    @pytest.mark.abcididentifyapi
+    def test_abc_identify_3_005_2(self, request):
+        """ test_abc_identify_3_005_2 """
+        """ Error Handling """
+        """ Request Body format is not correct """
+        """ Expected 400 and message is 'Misformed Request Body' """
+
+        item = "test_abc_id_identify_api_3_005"
+        LogHelp.log_test_env(item, request.config.getoption('--env'))
+
+        req_headers = {
+            "Content-Type": "application/json",
+            "X-SOURCE-ID": "X-SOURCE-ID",
+            "api_txno": "YYYYMMDDHHmmssfff"
+            }
+
+        req_body = {
+            "sourceIds": [],
+            "sourceIdType":"OID"
+        }
+
+        LogHelp.log_url_header_body(item, BASEURL+':'+ABCIDIDENTIFYPORT+ABCIDIDENTIFYPATH, req_headers, req_body)
+        response = requests.post(url=BASEURL+':'+ABCIDIDENTIFYPORT+ABCIDIDENTIFYPATH, headers=req_headers, json=req_body, timeout=TIMEOUT)
+        response_json = json.loads(response.text)
+        assert response.status_code == 400
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
+
+    @pytest.mark.abcididentifyapi
     def test_abc_identify_3_006(self, request):
         """ test_abc_id_identify_api_3_006 """
         """ Error Handling """
