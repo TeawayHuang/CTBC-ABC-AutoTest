@@ -1,7 +1,7 @@
 .DS_Store
 /archive
 /TestReport
-/Tests/__pycache__
+*/__pycache__/
 lint_result.txt
 output.json
 pytest_html_report.html

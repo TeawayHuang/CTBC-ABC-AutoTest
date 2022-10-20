@@ -261,8 +261,8 @@ class TestClassAbcCollectorAPI:
     def test_abc_collector_api_1_004_1(self, request):
         """ test_abc_collector_api_1_004_1 """
         """ Error Handling """
-        """ Request Header without OID """
-        """ Expected 400 and message is 'OID can not be null' """
+        """ Request Body without OID """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
 
         item = "test_abc_collector_api_1_004_1"
         LogHelp.log_test_env(item, request.config.getoption('--env'))
@@ -295,15 +295,15 @@ class TestClassAbcCollectorAPI:
         response_json = json.loads(response.text)
         assert response.status_code == 400
         self.verify_error_response_body(response_json)
-        assert '400' in str(response_json['error']['code'])
-        assert 'OID can not be null' in response_json['error']['message']
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
 
     @pytest.mark.abccollectorapi
     def test_abc_collector_api_1_004_2(self, request):
         """t est_abc_collector_api_1_004_2 """
         """ Error Handling """
         """ Request Header without clickDateTime """
-        """ Expected 400 and message is 'clickDateTime can not be null' """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
 
         item = "test_abc_collector_api_1_004_2"
         LogHelp.log_test_env(item, request.config.getoption('--env'))
@@ -336,15 +336,15 @@ class TestClassAbcCollectorAPI:
         response_json = json.loads(response.text)
         assert response.status_code == 400
         self.verify_error_response_body(response_json)
-        assert '400' in str(response_json['error']['code'])
-        assert 'clickDateTime can not be null' in response_json['error']['message']
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
 
     @pytest.mark.abccollectorapi
     def test_abc_collector_api_1_004_3(self, request):
         """ test_abc_collector_api_1_004_3 """
         """ Error Handling """
-        """ Request Header without clickUrl """
-        """ Expected 400 and message is 'clickUrl can not be null' """
+        """ Request Body without clickUrl """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
 
         item = "test_abc_collector_api_1_004_3"
         LogHelp.log_test_env(item, request.config.getoption('--env'))
@@ -378,8 +378,137 @@ class TestClassAbcCollectorAPI:
         response_json = json.loads(response.text)
         assert response.status_code == 400
         self.verify_error_response_body(response_json)
-        assert '400' in str(response_json['error']['code'])
-        assert 'clickUrl can not be null' in response_json['error']['message']
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
+
+    @pytest.mark.abccollectorapi
+    def test_abc_collector_api_1_004_4(self, request):
+        """ test_abc_collector_api_1_004_4 """
+        """ Error Handling """
+        """ Request Body with OID is incorrect """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
+
+        item = "test_abc_collector_api_1_004_3"
+        LogHelp.log_test_env(item, request.config.getoption('--env'))
+
+        oid = self.random_oid()
+        clickdatetime = self.get_datetime()
+
+        req_headers = {
+            "Content-Type": "application/json",
+            "X-APP-ID": "X-APP-ID",
+            "X-APP-KEY": "X-APP-KEY",
+            "X-SOURCE-ID": "X-SOURCE-ID",
+            "api_txno": "YYYYMMDDHHmmssfff"
+            }
+
+        req_body = {
+            "data": {
+                "OIDs": oid,
+                "clickInfo": {
+                    "clickDateTime": clickdatetime,
+                    "clickUrl": "https://www.google.com",
+                    "productName": "string",
+                    "productDesc": "string",
+                    "branchCode": "string",
+                    "depositNumber": "string"
+                }
+            }
+        }
+
+        LogHelp.log_url_header_body(item, BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, req_headers, req_body)
+        response = requests.post(url=BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, headers=req_headers, json=req_body, timeout=TIMEOUT)
+        response_json = json.loads(response.text)
+        assert response.status_code == 400
+        self.verify_error_response_body(response_json)
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
+
+    @pytest.mark.abccollectorapi
+    def test_abc_collector_api_1_004_5(self, request):
+        """ test_abc_collector_api_1_004_5 """
+        """ Error Handling """
+        """ Request Body with clickDateTime is incorrect """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
+
+        item = "test_abc_collector_api_1_004_3"
+        LogHelp.log_test_env(item, request.config.getoption('--env'))
+
+        oid = self.random_oid()
+        clickdatetime = self.get_datetime()
+
+        req_headers = {
+            "Content-Type": "application/json",
+            "X-APP-ID": "X-APP-ID",
+            "X-APP-KEY": "X-APP-KEY",
+            "X-SOURCE-ID": "X-SOURCE-ID",
+            "api_txno": "YYYYMMDDHHmmssfff"
+            }
+
+        req_body = {
+            "data": {
+                "OID": oid,
+                "clickInfo": {
+                    "clickDateTimes": clickdatetime,
+                    "clickUrl": "https://www.google.com",
+                    "productName": "string",
+                    "productDesc": "string",
+                    "branchCode": "string",
+                    "depositNumber": "string"
+                }
+            }
+        }
+
+        LogHelp.log_url_header_body(item, BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, req_headers, req_body)
+        response = requests.post(url=BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, headers=req_headers, json=req_body, timeout=TIMEOUT)
+        response_json = json.loads(response.text)
+        assert response.status_code == 400
+        self.verify_error_response_body(response_json)
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
+
+    @pytest.mark.abccollectorapi
+    def test_abc_collector_api_1_004_6(self, request):
+        """ test_abc_collector_api_1_004_6 """
+        """ Error Handling """
+        """ Request Body with clickUrls is incorrect """
+        """ Expected 400 and code is '4002' and message is 'Misformed Request Body' """
+
+        item = "test_abc_collector_api_1_004_3"
+        LogHelp.log_test_env(item, request.config.getoption('--env'))
+
+        oid = self.random_oid()
+        clickdatetime = self.get_datetime()
+
+        req_headers = {
+            "Content-Type": "application/json",
+            "X-APP-ID": "X-APP-ID",
+            "X-APP-KEY": "X-APP-KEY",
+            "X-SOURCE-ID": "X-SOURCE-ID",
+            "api_txno": "YYYYMMDDHHmmssfff"
+            }
+
+        req_body = {
+            "data": {
+                "OID": oid,
+                "clickInfo": {
+                    "clickDateTime": clickdatetime,
+                    "clickUrls": "https://www.google.com",
+                    "productName": "string",
+                    "productDesc": "string",
+                    "branchCode": "string",
+                    "depositNumber": "string"
+                }
+            }
+        }
+
+        LogHelp.log_url_header_body(item, BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, req_headers, req_body)
+        response = requests.post(url=BASEURL+':'+ABCCONTROLLPORT+ABCCONTROLLAPIPATH, headers=req_headers, json=req_body, timeout=TIMEOUT)
+        response_json = json.loads(response.text)
+        assert response.status_code == 400
+        self.verify_error_response_body(response_json)
+        assert '4002' in str(response_json['error']['code'])
+        assert 'Misformed Request Body' in response_json['error']['message']
 
     def test_abc_collector_api_1_005(self, request):
         """ test_abc_collector_api_1_005 """
