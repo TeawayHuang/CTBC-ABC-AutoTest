@@ -1,0 +1,10 @@
+requests
+pytest
+pytest-html==3.1.1
+pytest-html-reporter==0.2.9
+pytest-selenium==3.0.0
+pytest-dotenv==0.5.2
+webdriver-manager==3.8.3
+pylint
+pycodestyle
+locust

@@ -1,0 +1,13 @@
+{
+  "appIds": [
+      "97d178c8-001c-4d09-a6bd-26cad79e31b3"
+  ],
+  "clientType": "desktopclient",
+  "contentType": 0,
+  "country": "TW",
+  "currency": "TWD",
+  "locale": "zh_tw",
+  "offset": 0,
+  "orderBy": "feature",
+  "perPage": 10
+}

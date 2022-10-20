@@ -1,0 +1,6 @@
+.DS_Store
+/archive
+/TestReport
+lint_result.txt
+output.json
+pytest_html_report.html
